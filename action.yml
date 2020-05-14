@@ -4,6 +4,9 @@
 
 name: Deploy to TakeShape
 description: Deploy a project using the TakeShape SSG
+branding:
+  color: purple
+  icon: arrow-up
 
 # We only want to deploy on changes to the master branch
 # You can change this to better meet the needs of your own project
