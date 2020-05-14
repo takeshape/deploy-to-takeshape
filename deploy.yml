@@ -1,0 +1,30 @@
+# This workflow deploys a TakeShape project.
+# Make sure to set Secrets in your GitHub repo's settings!
+# https://github.com/<profile>/<repo>/settings/secrets 
+
+name: Deploy to TakeShape
+
+# We only want to deploy on changes to the master branch
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+    # Runs commands using the runners shell
+    # Uses secrets set in https://github.com/<profile>/<repo>/settings/secrets
+    - name: Install Dependencies and Deploy
+      run: |
+        npm install
+        npm run deploy
+      env:
+        TS_PROJECT_ID: ${{ secrets.TS_PROJECT_ID }}
+        TS_AUTH_TOKEN: ${{ secrets.TS_AUTH_TOKEN }}
+        TS_SITE_NAME: ${{ secrets.TS_SITE_NAME }} 
+        TS_SITE_ID: ${{ secrets.TS_SITE_ID }}       
+        
