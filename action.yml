@@ -1,40 +1,28 @@
-# This workflow deploys a TakeShape project.
-# Make sure to set Secrets in your GitHub repo's settings!
-# https://github.com/<profile>/<repo>/settings/secrets 
-
 name: Deploy to TakeShape
 description: Deploy a project using the TakeShape SSG
 branding:
   color: purple
   icon: arrow-up
 
-# We only want to deploy on changes to the master branch
-# You can change this to better meet the needs of your own project
-# For example, you could deploy to different static sites depending on the branch
-# Learn more about configuring jobs:
-# https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
-on:
-  push:
-    branches:
-    - master
+inputs:
+  project-id:
+    description: "The ID of your TakeShape project. Found in the URL of your project on app.takeshape.io"
+    required: true
+  auth-token:
+    description: "A TakeShape API key. [Learn how to create one](https://www.takeshape.io/docs/creating-an-api-key/) in the TakeShape docs"
+    required: true
+  site-name:
+    description: "The name of the static site associated with your TakeShape project at app.takeshape.io/projects/<project-id>/sites"
+    required: true
+  site-id:
+    description: "The ID of the static site you want to deploy. Found in the URL of the static site in your project on app.takeshape.io"
+    required: true
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    # Runs commands using the runners shell
-    # Uses secrets set in https://github.com/<profile>/<repo>/settings/secrets
-    # You can change this to better meet the needs of your own project
-    # For example, if you use Yarn instead of npm, you should change the command
-    - name: Install Dependencies and Deploy
-      run: |
-        npm install
-        npm run deploy
-      env:
-        TS_PROJECT_ID: ${{ secrets.TS_PROJECT_ID }}
-        TS_AUTH_TOKEN: ${{ secrets.TS_AUTH_TOKEN }}
-        TS_SITE_NAME: ${{ secrets.TS_SITE_NAME }} 
-        TS_SITE_ID: ${{ secrets.TS_SITE_ID }}       
-        
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.project-id }}
+    - ${{ inputs.auth-token }}
+    - ${{ inputs.site-name }}
+    - ${{ inputs.site-id }}        
