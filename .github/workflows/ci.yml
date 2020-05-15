@@ -1,0 +1,29 @@
+# This workflow deploys a TakeShape project.
+# Make sure to set Secrets in your GitHub repo's settings!
+# https://github.com/<profile>/<repo>/settings/secrets 
+name: CI
+
+# We only want to deploy on changes to the master branch
+# You can change this to better meet the needs of your own project
+# For example, you could deploy to different static sites depending on the branch
+# Learn more about configuring jobs:
+# https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    # Uses secrets set in https://github.com/<profile>/<repo>/settings/secrets
+    # You can change this to better meet the needs of your own project
+    - name: Deploy to TakeShape
+      uses: takeshape/deploy-to-takeshape@v1.0
+      with:
+        project-id: ${{ secrets.TS_PROJECT_ID }}
+        auth-token: ${{ secrets.TS_AUTH_TOKEN }}
+        site-name: ${{ secrets.TS_SITE_NAME }} 
+        site-id: ${{ secrets.TS_SITE_ID }}      
