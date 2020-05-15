@@ -35,7 +35,7 @@ jobs:
     # Uses secrets set in https://github.com/<profile>/<repo>/settings/secrets
     # You can change this to better meet the needs of your own project
     - name: Deploy to TakeShape
-      uses: takeshape/deploy-to-takeshape@v1.0
+      uses: takeshape/deploy-to-takeshape@v1.2
       with:
         project-id: ${{ secrets.TS_PROJECT_ID }}
         auth-token: ${{ secrets.TS_AUTH_TOKEN }}
