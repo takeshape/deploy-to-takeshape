@@ -2,7 +2,9 @@
 A GitHub action for deploying a project that uses the TakeShape SSG
 
 ## How to use
-First, set the following secrets in `/settings/secrets`:
+First, make sure `@takeshape/cli` is a dev dependency in your `package.json`. If it isn't, run `npm install @takeshape/cli --save-dev`.
+
+Next, set the following secrets in `/settings/secrets`:
   
 * `TS_PROJECT_ID`: the ID of your TakeShape project. Found in the URL of your project on app.takeshape.io
 * `TS_AUTH_TOKEN`: a TakeShape API key. [Learn how to create one](https://www.takeshape.io/docs/creating-an-api-key/) in the TakeShape docs
